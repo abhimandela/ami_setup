@@ -27,7 +27,11 @@ Instructions to update AMI configurations:
 
 * The script has to be run from the directory where config.json and this file are located
 * Other files that are bring modified like the motion.conf and heliocron.toml must be present in respective paths
-* From commandline that has Python3 enabled, run the command "sudo python3 set_ami_config.py"
+* From commandline that has Python3 enabled, run the command
+
+   ```bash
+   sudo python3 set_ami_config.py
+
 * The above command prints a summary of changes done to script, make sure the changes intended are reflected correctly. 
 * The script does not validate for correct input values that can be entered atleast not at this point 
 
