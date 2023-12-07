@@ -1,4 +1,4 @@
-# ami_setup
+# AMI Setup with Witty Pi L3V7 
 This is the branch to modify AMI configurations to be used with the WittyPi L3V7 unit with 18650 battery holder and 18650 battery. 
 
 WittyPi L3V7 https://www.uugear.com/product/witty-pi-4-l3v7/ can be used a single board solution that provides RTC, Watchdog and UPS functionalities intended for the AMI systems. This add on board to Raspberry Pi also provides capabilities to  schedule ON and OFF times with custom schedules.
