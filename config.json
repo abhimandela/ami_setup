@@ -1,0 +1,32 @@
+{
+   "location": {
+      "lat": 52.752845,
+      "lon": -3.253449
+   },
+   "operation": {
+      "start_date": "2023-12-05",
+      "end_date": "2024-12-04",
+      "start_time": "19:37:48 GMT",
+      "end_time": "06:37:48 GMT",
+      "days_of_week": ["Mon", "Wed", "Fri"],
+      "sunrise_operation": ["OFF", "60", "before"],
+      "sunset_operation": ["ON", "30", "after"]
+   },
+   "camera": {
+      "brightness": 300,
+      "focus_auto": 2,
+      "focus_absolute": 200,
+      "exposure_auto": 3,
+      "exposure_absolute": 320,
+      "zoom_absolute": 400,
+      "white_balance_temperature_auto": 3,
+      "white_balance_temperature": 7000,
+      "sharpness": 35,
+      "contrast": 20
+   },
+   "motion": {
+      "pause": "off",
+      "snapshot_interval": 60
+   }
+}
+
