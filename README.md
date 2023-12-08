@@ -1,4 +1,4 @@
-# ami_setup
+# AMI Setup with Witty Pi L3V7 
 This is the branch to modify AMI configurations to be used with the WittyPi L3V7 unit with 18650 battery holder and 18650 battery. 
 
 WittyPi L3V7 https://www.uugear.com/product/witty-pi-4-l3v7/ can be used a single board solution that provides RTC, Watchdog and UPS functionalities intended for the AMI systems. This add on board to Raspberry Pi also provides capabilities to  schedule ON and OFF times with custom schedules.
@@ -28,7 +28,11 @@ Instructions to update AMI configurations:
 
 * The script has to be run from the directory where config.json and this file are located
 * Other files that are bring modified like the motion.conf and heliocron.toml must be present in respective paths
-* From commandline that has Python3 enabled, run the command "sudo python3 set_ami_config.py"
+* From commandline that has Python3 enabled, run the command
+
+   ```bash
+   sudo python3 set_ami_config.py
+
 * The above command prints a summary of changes done to script, make sure the changes intended are reflected correctly. 
 * The script does not validate for correct input values that can be entered atleast not at this point 
 
