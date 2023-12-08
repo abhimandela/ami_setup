@@ -13,7 +13,6 @@ def read_json_config(json_path):
 def update_toml_config(toml_path, location_data):
     with open(toml_path, 'r') as toml_file:
         config = toml.load(toml_file)
-        #print ("toml PATH: ", toml_path," Config: ",config)
 
     # Update location information
     #print ("Lat: ",location_data['location']['lat'])
@@ -34,16 +33,12 @@ def get_camera_id():
         return camera_id
     except subprocess.CalledProcessError as e:
         print(f"Error running 'ls' command: {e}, defaulting to /dev/video0")
-        camera_id = '/dev/video0'
-        return None
+        return '/dev/video0'
 
 # Configure 'motion' software related paramters 
-def update_motion_config(script_path, motion_data):
+def update_motion_config(script_path, motion_data, camera_id):
     with open(script_path, 'r') as script_file:
         script_lines = script_file.readlines()
-    
-    # Get the camera ID
-    camera_id = get_camera_id()
 
     #print (motion_data['motion'].items())
 
@@ -55,14 +50,19 @@ def update_motion_config(script_path, motion_data):
             if line.strip().startswith('#'):
                 continue
 
-            if line.strip() == 'videodevice':                
-                print(f"videodevice line: {line.strip()}")
-                # TODO: Update videodevice with camera ID as in other functions
-            #else:
-            #    new_line = line.replace(f"{key} {original_value}", f"{key} {value}")
-            #    print(f"Updated line: {new_line.strip()}")
-
+            # Case to update videodevice ID which is not set in the config.json file
+            if 'videodevice' in line:
+                print(f"Original videodevice line: {line.strip()}")
                 
+                # Extract the part after "videodevice"
+                _, existing_camera_id = line.split('videodevice')
+                
+                # Replace the existing camera ID with the new camera ID
+                new_line = line.replace(existing_camera_id, f' {camera_id}')
+                
+                print(f"Updated videodevice line: {new_line.strip()}") 
+                break 
+
             # Using a regular expression to find lines containing the setting key and value
             pattern = fr'({key} )(\S+)'
             #print ("pattern: ",pattern)
@@ -86,7 +86,7 @@ def update_camera_config(config_path, camera_id):
     with open(config_path, 'r') as config_file:
         config_lines = config_file.readlines()
 
-    print ("config_path", config_path)
+    #print ("config_path", config_path)
     print ("camera_id", camera_id)
 
     # Update the line containing "videodevice"
@@ -122,12 +122,9 @@ def update_camera_config(config_path, camera_id):
         config_file.writelines(config_lines)
 
 # Update camera settings along with the video device ID / Camera ID 
-def update_camera_settings(script_path, camera_data):
+def update_camera_settings(script_path, camera_data, camera_id):
     with open(script_path, 'r') as script_file:
         script_lines = script_file.readlines()
-
-    # Get the camera ID
-    camera_id = get_camera_id()
     
     # Update camera settings
     for key, value in camera_data['camera'].items():
@@ -163,9 +160,12 @@ if __name__ == "__main__":
 
     #Initialize camera ID if camera ID lookup fails 
     camera_id = '/dev/video0'
+    camera_id = get_camera_id()
+
+    print ("Camera ID after initialization", camera_id)
 
     # Heliocron settings script is located here: '~/.config/helicocron.toml' 
-    toml_config_path = '/home/abhi/.config/heliocron.toml'
+    toml_config_path = '/home/pi/.config/heliocron.toml'
 
     # Replace with the actual path to your shell script file as needed
     camera_script_path = '/home/pi/scripts/setCamera.sh'
@@ -179,10 +179,10 @@ if __name__ == "__main__":
     update_toml_config(toml_config_path, json_config)
 
     # Update camera settings in the shell script file
-    update_camera_settings(camera_script_path, json_config)
+    update_camera_settings(camera_script_path, json_config, camera_id)
 
     # Update motion settings in the shell script file
-    update_motion_config(motion_script_path, json_config)
+    update_motion_config(motion_script_path, json_config, camera_id)
 
     #Update camera config files in the motion folder
     update_camera_config(camera_config_path, camera_id)
