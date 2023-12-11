@@ -8,9 +8,17 @@ AMI configuration files here have been adjusted to be used only with the WittyPi
 More information about Witty Pi in the user manual here: https://cdn-shop.adafruit.com/product-files/5705/WittyPi4L3V7_UserManual.pdf 
 
 
-## Usage  
 
-Set the configurations by running the set_ami_config.py as below:
+
+## Installing necessary packages if the recommended image is not being used: (requires internet)
+
+Install required dependencies by running:
+
+   ```bash
+   sudo pip3 install -r requirements.txt
+
+## Usage  
+## Set the configurations by running the set_ami_config.py as below:
 
 * The script has to be run from the directory where config.json and this file are located
 * Other files that are bring modified like the motion.conf and heliocron.toml must be present in respective paths
@@ -57,15 +65,6 @@ Configuration Files
 
 Note: Ensure that you have the necessary permissions to modify the specified configuration files. Running scripts as sudo ensures that there will be no failures due to previlege settings 
 
-
-## Installing necessary packages if the recommended image is not being used: (requires internet)
-
-Install required dependencies by running:
-
-   ```bash
-   sudo pip3 install -r requirements.txt
-
-
 ## Installing Witty Pi L3V7 if the recommended image is not being used: (requires internet)
 
    You just need to run these two commands in your Raspberry Pi to install Witty Pi 4 L3V7’s software:
@@ -75,6 +74,9 @@ Install required dependencies by running:
 
    ```bash
    pi@raspberrypi:~ $ sudo sh install.sh
+
+
+
 
 ## Dependencies
 
