@@ -68,7 +68,7 @@ Install required dependencies by running:
 
 ## Installing Witty Pi L3V7 if the recommended image is not being used: (requires internet)
 
- You just need to run these two commands in your Raspberry Pi to install Witty Pi 4 L3V7’s software:
+   You just need to run these two commands in your Raspberry Pi to install Witty Pi 4 L3V7’s software:
    
    ```bash
    pi@raspberrypi:~ $ sudo wget https://www.uugear.com/repo/WittyPi4/install.sh
