@@ -10,18 +10,11 @@ More information about Witty Pi in the user manual here: https://cdn-shop.adafru
 
 
 
-## Installing necessary packages if the recommended image is not being used: (requires internet)
-
-Install required dependencies by running:
-
-   ```bash
-   sudo pip3 install -r requirements.txt
-
 ## Usage  
-## Set the configurations by running the set_ami_config.py as below:
+Set the configurations by running the set_ami_config.py as below:
 
 * The script has to be run from the directory where config.json and this file are located
-* Other files that are bring modified like the motion.conf and heliocron.toml must be present in respective paths
+* Other files that are bring modified like the motion.conf and heliocron.toml must be present in respective paths (create templates if not aleady present)
 * From commandline that has Python3 enabled, run the command
 
    ```bash
@@ -36,9 +29,7 @@ This code aims to achieve the following:
 3. Ability to disable and enable motion detection 
 4. TBD: Ability to set operating times using sunset and sunrise times from a given location 
 
-# Configuration Update Script
-
-This script reads configuration settings from a JSON file and updates various configuration files accordingly.
+The script reads configuration settings from a JSON file and updates various configuration files accordingly.
 
 Instructions to update AMI configurations:
 1. Edit config.json to updated with appropriate values
@@ -63,18 +54,22 @@ Configuration Files
 
     camera1.conf: The camera configuration file in the motion folder located at /etc/motion/camera1.conf is updated.
 
-Note: Ensure that you have the necessary permissions to modify the specified configuration files. Running scripts as sudo ensures that there will be no failures due to previlege settings 
+Note: 
+1. Ensure that you have the necessary permissions to modify the specified configuration files.
+2. Running scripts as sudo ensures that there will be no failures due to previlege settings 
+
+## Installing necessary packages if the recommended image is not being used  (requires internet) :
+
+   ```bash
+   sudo pip3 install -r requirements.txt
+
 
 ## Installing Witty Pi L3V7 if the recommended image is not being used: (requires internet)
-
-   You just need to run these two commands in your Raspberry Pi to install Witty Pi 4 L3V7’s software:
    
    ```bash
    pi@raspberrypi:~ $ sudo wget https://www.uugear.com/repo/WittyPi4/install.sh
 
-   ```bash
    pi@raspberrypi:~ $ sudo sh install.sh
-
 
 
 
