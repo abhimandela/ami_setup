@@ -3,12 +3,9 @@ This is the branch to modify AMI configurations to be used with the WittyPi L3V7
 
 WittyPi L3V7 https://www.uugear.com/product/witty-pi-4-l3v7/ can be used a single board solution that provides RTC, Watchdog and UPS functionalities intended for the AMI systems. This add on board to Raspberry Pi also provides capabilities to  schedule ON and OFF times with custom schedules.
 
-AMI configuration files here have been adjusted to be used only with the WittyPi L3V7 and Raspberry Pi 4B with raspbian OS image version x.y.z.q (This contains the necessary software packages needed for Witty Pi L3V7). It is not tested and not guaranteed to work with other version of Witty Pi boards.
+AMI configuration files here have been adjusted to be used only with the WittyPi L3V7 and Raspberry Pi 4B with raspbian OS image version x.y.z.q (This contains the necessary software packages needed for Witty Pi L3V7- Jumpt to the last section here if you do not have tehe recommended image). It is not tested and not guaranteed to work with other version of Witty Pi boards.
 
 More information about Witty Pi in the user manual here: https://cdn-shop.adafruit.com/product-files/5705/WittyPi4L3V7_UserManual.pdf 
-
-
-
 
 ## Usage  
 Set the configurations by running the set_ami_config.py as below:
@@ -58,21 +55,6 @@ Note:
 1. Ensure that you have the necessary permissions to modify the specified configuration files.
 2. Running scripts as sudo ensures that there will be no failures due to previlege settings 
 
-## Installing necessary packages if the recommended image is not being used  (requires internet) :
-
-   ```bash
-   sudo pip3 install -r requirements.txt
-
-
-## Installing Witty Pi L3V7 if the recommended image is not being used: (requires internet)
-   
-   ```bash
-   pi@raspberrypi:~ $ sudo wget https://www.uugear.com/repo/WittyPi4/install.sh
-
-   pi@raspberrypi:~ $ sudo sh install.sh
-
-
-
 ## Dependencies
 
 The script uses the following Python libraries:
@@ -82,3 +64,17 @@ The script uses the following Python libraries:
 ## Disclaimer
 
 Make sure to back up your original configuration files before running this script to avoid any unintended changes.
+
+
+## Installing Witty Pi and necessary packages if the recommended image is not being used: (requires internet)
+   
+   ```bash
+   # Installing Witty Pi L3V7 related libraries and drivers
+   pi@raspberrypi:~ $ sudo wget https://www.uugear.com/repo/WittyPi4/install.sh
+
+   pi@raspberrypi:~ $ sudo sh install.sh
+
+   # Installing necessary packages for configuration:
+
+   sudo pip3 install -r requirements.txt
+
