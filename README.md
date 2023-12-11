@@ -7,24 +7,10 @@ AMI configuration files here have been adjusted to be used only with the WittyPi
 
 More information about Witty Pi in the user manual here: https://cdn-shop.adafruit.com/product-files/5705/WittyPi4L3V7_UserManual.pdf 
 
-# Configuration Update Script
 
-This script reads configuration settings from a JSON file and updates various configuration files accordingly.
+## Usage  
 
-Instructions to update AMI configurations:
-1. Edit config.json to updated with appropriate values
-2. Run the set_ami_config.py to set all necessary configurations 
-3. Paths should be absolute, and eveything should work as long as the paths and values entered are correct
-4. TODO: Include DATA validation 
-
-## Usage 
-
-1. Install the required dependencies by running:
-
-   ```bash
-   sudo pip3 install -r requirements.txt
-
-2. Set the configurations by running the set_ami_config.py as below:
+Set the configurations by running the set_ami_config.py as below:
 
 * The script has to be run from the directory where config.json and this file are located
 * Other files that are bring modified like the motion.conf and heliocron.toml must be present in respective paths
@@ -37,11 +23,20 @@ Instructions to update AMI configurations:
 * The script does not validate for correct input values that can be entered atleast not at this point 
 
 This code aims to achieve the following:
-1. Requirements file for installing necessary packages for the WittyPi functionality integration 
-2. Ability to configure AMI systems with snapshot interval
-3. Ability to set different camera settings available 
-4. Ability to disable and enable motion detection 
-5. Ability to set operating times using sunset and sunrise times from a given location 
+1. Ability to configure AMI systems with snapshot interval
+2. Ability to set different camera settings available 
+3. Ability to disable and enable motion detection 
+4. TBD: Ability to set operating times using sunset and sunrise times from a given location 
+
+# Configuration Update Script
+
+This script reads configuration settings from a JSON file and updates various configuration files accordingly.
+
+Instructions to update AMI configurations:
+1. Edit config.json to updated with appropriate values
+2. Run the set_ami_config.py to set all necessary configurations 
+3. Paths should be absolute, and eveything should work as long as the paths and values entered are correct
+4. TODO: Include DATA validation 
 
 The set_ami_config.py script does the following after reading the config.json file:
 1. Update location in ~/.config/helicocron.toml
@@ -62,12 +57,31 @@ Configuration Files
 
 Note: Ensure that you have the necessary permissions to modify the specified configuration files. Running scripts as sudo ensures that there will be no failures due to previlege settings 
 
-Dependencies
+
+## Installing necessary packages if the recommended image is not being used: (requires internet)
+
+Install required dependencies by running:
+
+   ```bash
+   sudo pip3 install -r requirements.txt
+
+
+## Installing Witty Pi L3V7 if the recommended image is not being used: (requires internet)
+
+ You just need to run these two commands in your Raspberry Pi to install Witty Pi 4 L3V7’s software:
+   
+   ```bash
+   pi@raspberrypi:~ $ sudo wget https://www.uugear.com/repo/WittyPi4/install.sh
+
+   ```bash
+   pi@raspberrypi:~ $ sudo sh install.sh
+
+## Dependencies
 
 The script uses the following Python libraries:
 
     toml: A library for working with TOML configuration files.
 
-Disclaimer
+## Disclaimer
 
 Make sure to back up your original configuration files before running this script to avoid any unintended changes.
