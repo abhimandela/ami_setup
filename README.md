@@ -22,7 +22,7 @@ Instructions to update AMI configurations:
 1. Install the required dependencies by running:
 
    ```bash
-   pip install -r requirements.txt
+   sudo pip install -r requirements.txt
 
 2. Set the configurations by running the set_ami_config.py as below:
 
