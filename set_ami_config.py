@@ -15,6 +15,7 @@ def update_toml_config(toml_path, location_data):
         config = toml.load(toml_file)
 
     # Update location information
+    print (" ***************** Updating Location information ***************** ")
     #print ("Lat: ",location_data['location']['lat'])
     #print ("Lon: ",location_data['location']['lon'])
     config['latitude'] = location_data['location']['lat']
@@ -39,6 +40,8 @@ def get_camera_id():
 def update_motion_config(script_path, motion_data, camera_id):
     with open(script_path, 'r') as script_file:
         script_lines = script_file.readlines()
+
+    print (" ***************** Updating motion settings ***************** ")
 
     #print (motion_data['motion'].items())
 
@@ -86,6 +89,8 @@ def update_camera_config(config_path, camera_id):
     with open(config_path, 'r') as config_file:
         config_lines = config_file.readlines()
 
+    print (" ***************** Updating camera config file ***************** ")
+
     #print ("config_path", config_path)
     print ("camera_id", camera_id)
 
@@ -103,9 +108,6 @@ def update_camera_config(config_path, camera_id):
 
             # Replace the part after "videodevice" with the camera_id value
             if len(parts) > 1:
-                #print ("Length ", len(parts))
-                #print ("Part[0] ",parts[0])
-                #print ("Part[1] ",parts[1])
                 parts[1] = camera_id
 
             # Join the parts back into a line
@@ -126,6 +128,8 @@ def update_camera_settings(script_path, camera_data, camera_id):
     with open(script_path, 'r') as script_file:
         script_lines = script_file.readlines()
     
+    print (" ***************** Updating camera settings ***************** ")
+
     # Update camera settings
     for key, value in camera_data['camera'].items():
         for i, line in enumerate(script_lines):
