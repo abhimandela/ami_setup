@@ -36,48 +36,55 @@ def get_camera_id():
         print(f"Error running 'ls' command: {e}, defaulting to /dev/video0")
         return '/dev/video0'
 
-# Configure 'motion' software related paramters 
 def update_motion_config(script_path, motion_data, camera_id):
     with open(script_path, 'r') as script_file:
         script_lines = script_file.readlines()
 
     print (" ***************** Updating motion settings ***************** ")
 
-    #print (motion_data['motion'].items())
+    fields = list(motion_data['motion'].keys()) + ['videodevice', "exif_text"]
 
-    # Update motion settings
-    for key, value in motion_data['motion'].items():
-        for i, line in enumerate(script_lines):
-            
-            # Ignore lines starting with #
-            if line.strip().startswith('#'):
-                continue
+    for i, line in enumerate(script_lines):
 
-            # Case to update videodevice ID which is not set in the config.json file
-            if 'videodevice' in line:
-                print(f"Original videodevice line: {line.strip()}")
-                
-                # Extract the part after "videodevice"
-                _, existing_camera_id = line.split('videodevice')
-                
-                # Replace the existing camera ID with the new camera ID
-                new_line = line.replace(existing_camera_id, f' {camera_id}')
-                
-                print(f"Updated videodevice line: {new_line.strip()}") 
-                break 
+        # Ignore lines starting with #
+        if line.strip().startswith('#'):
+            continue
 
-            # Using a regular expression to find lines containing the setting key and value
-            pattern = fr'({key} )(\S+)'
-            #print ("pattern: ",pattern)
+        for field_search in fields:
+            pattern = fr'({field_search} )(\S+)'
+
             match = re.search(pattern, line)
+
             if match:
-                original_value = match.group(2)
-                print(f"Original line: {line.strip()}")
-                # Replace the setting value while preserving the rest of the line
-                new_line = line.replace(f"{key} {original_value}", f"{key} {value}")
-                print(f"Updated line: {new_line.strip()}")
-                script_lines[i] = new_line
-                break
+
+                field,_ = line.split(' ', 1)
+
+                if field == field_search or field == f";{field_search}":
+
+                    if field_search == "videodevice":
+                        # Extract the part after "videodevice"
+                        _, existing_camera_id = line.split('videodevice', 1)
+                        # Replace the existing camera ID with the new camera ID
+                        new_line = line.replace(existing_camera_id, f' {camera_id}\n')
+                        print(f"Updated videodevice line: {new_line.strip()}")
+                        script_lines[i] = new_line
+
+                    elif field_search == "exif_text":
+                        # the exif_text field includes a semicolon at the start of the line that also needs removal. It is good to replace the whole line
+                        new_line = line.replace(line, f"exif_text \'{json.dumps(motion_data)}\'\n")
+                        print(f"Updated exif metadata configuration") 
+                        script_lines[i] = new_line
+
+                    else:
+                        print(f"Original line: {line.strip()}")
+                        _, existing_value = line.split(field_search, 1)
+                        # Replace the existing camera ID with the new camera ID
+                        new_line = line.replace(existing_value, f" {motion_data['motion'][field_search]}\n")
+                        print(f"Updated line: {new_line.strip()}")
+                        script_lines[i] = new_line
+
+                else:
+                    continue
 
     # Write the updated script content back to the file
     with open(script_path, 'w') as script_file:
