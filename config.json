@@ -36,7 +36,7 @@
       "Data format": "S32_LE",
       "Recording type": "mono",
       "File extension": "wav",
-      "Duration": "60"
+      "Recording duration": "60"
    },
 
    "IDs": {

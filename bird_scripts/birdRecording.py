@@ -23,7 +23,7 @@ import os
 
 ### Import metadata variables including system configuration ###
 with open("parent_jsons/1_boot_start.json", 'r') as file:
-        boot_metadata = json.load(file)
+        json_config = json.load(file)
 
 # ===========================================================================================================================
 
@@ -36,14 +36,14 @@ date_and_time = datetime.datetime.now()
 
 # Make directory path name (use directory specified by user as the one where they want the audio files to be stored)
 # Match year_month_day format
-path_to_file_storage = str(boot_metadata["Directory saved"] + "%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day)) # e.g. '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8'
+path_to_file_storage = str(json_config["Directory saved"] + "%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day)) # e.g. '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8'
 # Create directory with this name
 Path(path_to_file_storage).mkdir(exist_ok=True) # If exists already, then doesn't throw an error
 
 ## Make name for file to store in this directory
 
 # Match LID_x__SID_x__HID_x__year_month_day__hour_minute_second format
-file_to_store = str(boot_metadata['locationID'] + "__" + boot_metadata['System ID'] + "__" + boot_metadata['Hardware ID of Pi system'] + "__" + boot_metadata['Hardware ID of sensor'] + "__%s_%s_%s__%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day, date_and_time.hour, date_and_time.minute, date_and_time.second))
+file_to_store = str(json_config['location ID'] + "__" + json_config['System ID'] + "__" + json_config['Hardware ID'] + "__%s_%s_%s__%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day, date_and_time.hour, date_and_time.minute, date_and_time.second))
 
 # Obtain the number of files already within the directory
 files = os.listdir(path_to_file_storage)
@@ -55,7 +55,7 @@ wav_files = [file for file in files if file.endswith('.wav')]
 order_number = len(wav_files) + 1
 
 ## Combine directory and file names into 1 path
-full_path = path_to_file_storage + "/" + file_to_store + "__order_" + order_number + "." +  boot_metadata["File extension"] # '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8/LID_test__SID_test__HID_test__2023_2_8__17_42_7.wav'
+full_path = path_to_file_storage + "/" + file_to_store + "__order_" + order_number + "." +  json_config["File extension"] # '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8/LID_test__SID_test__HID_test__2023_2_8__17_42_7.wav'
 
 # ===========================================================================================================================
 
@@ -79,7 +79,7 @@ full_path = path_to_file_storage + "/" + file_to_store + "__order_" + order_numb
 #proc_args = ['arecord', '-D', 'plughw:dodoMic,0', '-c', '1', '-d', '60', '-r', '24000', '-f', 'S32_LE', '-t', 'wav', '-V', 'mono', '-v', full_path]
 
 # Arguments read in from the system_config.JSON file (which can be altered)
-proc_args = ['arecord', '-D', boot_metadata['Microphone brand name'], '-c', boot_metadata['Number of channels'], '-d', boot_metadata["Recording duration"], '-r', boot_metadata['Sampling frequency'], '-f', boot_metadata['Data format'], '-t', boot_metadata["File extension"], '-V', boot_metadata['Recording type'], '-v', full_path]
+proc_args = ['arecord', '-D', json_config['Microphone brand name'], '-c', json_config['Number of channels'], '-d', json_config["Recording duration"], '-r', json_config['Sampling frequency'], '-f', json_config['Data format'], '-t', json_config["File extension"], '-V', json_config['Recording type'], '-v', full_path]
 
 ## Recording process - run the arecord function from Python
 rec_proc = subprocess.Popen(proc_args)
@@ -148,7 +148,7 @@ metadata = {
 }
 
 # Update boot metadata
-boot_metadata.update(metadata)
+json_config.update(metadata)
 
 with taglib.File(path_to_file_storage, save_on_exit=True) as recording:
     #print(recording.tags)
