@@ -68,7 +68,7 @@
      "base ids":{
       "location id": "loc000001",
       "system id": "sys000001",
-      "hardware id": "har000001",
+      "hardware id": "har000001"
      },
 
    "motion event data":{
@@ -96,12 +96,9 @@
 
    "microphone event data":{
 
-      "ids": {
-         "location id": null,
-         "system id": null,
-         "hardware id": null,
+      "event IDs": {
          "parentEventID": null,
-         "eventID": null
+         "eventID":  null
       },
 
       "date fields": {

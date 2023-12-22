@@ -9,7 +9,7 @@ __author__ = 'Grace Skinner'
 ### imports ###
 
 from pathlib import Path # pathlib part of python standard library. Used to make new directories
-import datetime # datetime part of python standard library. Used to get date and time 
+import datetime # datetime part of python standard library. Used to get date and time
 import subprocess # Used to run bash arecord from python
 #import birdconfig # Used to configure settings for bird recording. Access variables defined in birdconfig.py
 import json # Used to configure settings for bird recording. Access variables defined in system_config.JSON
@@ -17,14 +17,14 @@ import json # Used to configure settings for bird recording. Access variables de
 # To store metadata
 import taglib
 import os
-from datetime import timedelta
+#from datetime import datetime, timedelta
 import pytz
 from timezonefinder import TimezoneFinder
 
 # ===========================================================================================================================
 
 ### Import metadata variables including system configuration ###
-with open("parent_jsons/1_boot_start.json", 'r') as file:
+with open("config.json", 'r') as file:
         json_config = json.load(file)
 
 # ===========================================================================================================================
@@ -45,7 +45,7 @@ Path(path_to_file_storage).mkdir(exist_ok=True) # If exists already, then doesn'
 ## Make name for file to store in this directory
 
 # Match LID_x__SID_x__HID_x__year_month_day__hour_minute_second format
-file_to_store = str(json_config["base ids"]['location id'] + "__" + json_config["base ids"]['system id'] + "__" + json_config["base ids"]['hardware id'] + "__%s_%s_%s__%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day, date_and_time.hour, date_and_time.minute, date_and_time.second))
+file_to_store = str(json_config["base ids"]['location ID'] + "__" + json_config["base ids"]['System ID'] + "__" + json_config["base ids"]['Hardware ID'] + "__%s_%s_%s__%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day, date_and_time.hour, date_and_time.minute, date_and_time.second))
 
 # Obtain the number of files already within the directory
 files = os.listdir(path_to_file_storage)
@@ -57,47 +57,14 @@ wav_files = [file for file in files if file.endswith('.wav')]
 order_number = len(wav_files) + 1
 
 ## Combine directory and file names into 1 path
-full_path = path_to_file_storage + "/" + file_to_store + "__order_" + str(order_number) + "." +  json_config["file extension"] # '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8/LID_test__SID_test__HID_test__2023_2_8__17_42_7.wav'
+full_path = path_to_file_storage + "/" + file_to_store + "__order_" + order_number + "." +  json_config["microphone"]["File extension"] # '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8/LID_test__SID_test__HID_test__2023_2_8__17_42_7.wav'
 
-# ===========================================================================================================================
+##############
 
-### Recording ###
+#Deleted record section
 
-## Process arguments - Make list of arecord function and arguments used by arecord
+##############
 
-# For reference:
-# (Can change these settings using the system_config.JSON file)
-# -D plughw:dodoMic,0 is the recording Device - this may need to be done in set-up of each AMI? Can't use card number as it occasionally changes (usually 1). 
-# -c 1 is the number of channels, here 1
-# -d 60 is the duration, here 60 seconds 
-# -r 24000 is the sampling rate, here 24000Hz (needs to be at least double the highest frequency bird call we want to sample)
-# -f S32_LE is the format, here S32_LE
-# -t wav is the file type to save, here wav file
-# -V mono is the type, here mono (could also be stereo)
-# -v is verbose 
-# full_path specifies the file path to save the file to (as defined above) 
-
-# Arguments set at default
-#proc_args = ['arecord', '-D', 'plughw:dodoMic,0', '-c', '1', '-d', '60', '-r', '24000', '-f', 'S32_LE', '-t', 'wav', '-V', 'mono', '-v', full_path]
-
-# Arguments read in from the system_config.JSON file (which can be altered)
-proc_args = ['arecord', '-D', json_config['Microphone brand name'], '-c', json_config['Number of channels'], '-d', json_config["Recording duration"], '-r', json_config['Sampling frequency'], '-f', json_config['Data format'], '-t', json_config["File extension"], '-V', json_config['Recording type'], '-v', full_path]
-
-## Recording process - run the arecord function from Python
-rec_proc = subprocess.Popen(proc_args)
-
-# Verbose
-# pid = process id
-print("Start recording with arecord > rec_proc pid = " + str(rec_proc.pid))
-print("Start recording with arecord > recording started")
-
-# Make sure it waits for the recording to be complete before moving on
-rec_proc.wait()
-
-# Final verbose
-print("Stop recording with arecord > Recording stopped") 
-
-# ===========================================================================================================================
 
 ### Metadata collection ###
 # Get the current date and time
@@ -147,7 +114,7 @@ def get_file_size_kb(file_path):
     return file_size_kb
 
 #Obtain file size
-file_size_kb = get_file_size_kb(full_path)
+file_size_kb = 12
 
 # obtain IDs
 location_id = json_config["base ids"]["location id"]
@@ -170,8 +137,8 @@ eventID = f"{system_id}__{audio_type}__{id_datetime}__{order_number}"
 metadata = {
      
       "event IDs": {
-         "parentEventID": parentEventID,
-         "eventID": eventID
+         "parentEventID": "sys000001__%Y_%m_%d__19_37_48__06_37_48",
+         "eventID": "sys000001__%Y_%m_%d__%H_%M_%S__motion__%q"
       },
 
     "date fields": {
@@ -191,11 +158,8 @@ metadata = {
 # Update the config dictionary
 json_config["microphone event data"].update(metadata)
 
-# Save within the audio file
-with taglib.File(path_to_file_storage, save_on_exit=True) as recording:
-    #print(recording.tags)
-    recording.tags["TITLE"] = json.dumps(metadata)
-    print("Metadata added to recording")
+with open("test.json", 'w') as json_file:
+    json.dump(json_config, json_file)
 
 # ## Additionally, create a json file with the same name as the file
 # # Define the new file name with a JSON extension
