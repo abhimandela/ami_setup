@@ -9,15 +9,17 @@ __author__ = 'Grace Skinner'
 ### imports ###
 
 from pathlib import Path # pathlib part of python standard library. Used to make new directories
-import datetime # datetime part of python standard library. Used to get date and time 
+from datetime # datetime part of python standard library. Used to get date and time 
 import subprocess # Used to run bash arecord from python
 #import birdconfig # Used to configure settings for bird recording. Access variables defined in birdconfig.py
 import json # Used to configure settings for bird recording. Access variables defined in system_config.JSON
 
 # To store metadata
-import time
 import taglib
 import os
+from datetime import timedelta
+import pytz
+from timezonefinder import TimezoneFinder
 
 # ===========================================================================================================================
 
@@ -101,11 +103,6 @@ print("Stop recording with arecord > Recording stopped")
 # Get the current date and time
 current_date = datetime.datetime.now()
 
-# Extract the year, month, and day
-year = current_date.year
-month = current_date.month
-day = current_date.day
-
 # Get the current UTC time
 current_utc_time = datetime.datetime.utcnow()
 
@@ -115,12 +112,31 @@ if len(hour_difference) == 1:
     hour_difference = "0" + hour_difference
 
 # format the time
-formatted_datetime = current_date.strftime("%Y-%m-%dT%H:%M:%S")
+formatted_date = current_date.strftime("%Y-%m-%dT%H:%M:%S")
 
-# Check if daylight saving time is currently in effect
-is_dst = time.localtime().tm_isdst
+# Define a function that determines if deployment is in daylight saving time at the location and datetime
+def is_dst(latitude, longitude, dt):
+    # Get the timezone name for the given latitude and longitude
+    timezone_finder = TimezoneFinder()
+    timezone_name = timezone_finder.timezone_at(lat=latitude, lng=longitude)
 
-# Obtain the file size
+    # Get the timezone object for the determined timezone name
+    timezone = pytz.timezone(timezone_name)
+
+    # Localize the datetime to the specified timezone
+    localized_dt = timezone.localize(dt)
+
+    # Check if the datetime is in daylight saving time
+    return localized_dt.dst() != timedelta(0)
+
+# Obtain the daved latitude and longitude of the deployment
+latitude = json_config["location"]["lat"]
+longitude = json_config["location"]["lon"]
+
+# 1 if in daylight saving time, 0 if not
+dst = is_dst(latitude, longitude, current_date)
+
+# Define function to obtain file size
 def get_file_size_kb(file_path):
     # Get the size of the file in bytes
     file_size_bytes = os.path.getsize(file_path)
@@ -130,45 +146,71 @@ def get_file_size_kb(file_path):
 
     return file_size_kb
 
+#Obtain file size
 file_size_kb = get_file_size_kb(full_path)
 
-# Usage example
+# obtain IDs
+location_id = json_config["base ids"]["location id"]
+system_id = json_config["base ids"]["system id"]
+hardware_id = json_config["base ids"]["hardware id"]
+
+# Note recording type
+audio_type = "audible"
+
+# Generate parent event ID
+parentEventID = f"{system_id}__{audio_type}__start_time__end_time"
+
+# Obtain datetime with underscore seperator
+id_datetime = current_date.strftime("%Y_%m_%d__%H_%M_%S")
+
+# Generate event ID
+eventID = f"{system_id}__{audio_type}__{id_datetime}__{order_number}"
+
+#Save metadata as dictionary using same heirarchical structure as the config dictionary
 metadata = {
-    "eventID": file_to_store,
-    "eventDate": f"{formatted_datetime}-{hour_difference}00",
-    "year": year,
-    "month": month,
-    "day": day,
-    "type": "sound",
-    "Daylight saving time": is_dst,
-    "Recording period start date and time": None, # obtained from Witty pi??
-    "Recording period end date and time": None, # obtained from Witty pi??
-    "File size (KB)": file_size_kb,
-    "Hardware ID of sensor": None # user input and obtained from database
-}
+     
+      "event IDs": {
+         "parentEventID": "sys000001__%Y_%m_%d__19_37_48__06_37_48",
+         "eventID": "sys000001__%Y_%m_%d__%H_%M_%S__motion__%q"
+      },
 
-# Update boot metadata
-json_config.update(metadata)
+    "date fields": {
+        "eventDate": f"{formatted_date}-{hour_difference}00",
+        "daylight saving time": dst,
+        "recording period start time": None,
+        "recording period end time": None
+        },
 
+    "file characteristics":{
+         "file size (KB)": file_size_kb,
+         "file path": full_path,
+         "file_type": audio_type
+        }
+   }
+
+# Update the config dictionary
+json_config["microphone event data"].update(metadata)
+
+# Save within the audio file
 with taglib.File(path_to_file_storage, save_on_exit=True) as recording:
     #print(recording.tags)
     recording.tags["TITLE"] = json.dumps(metadata)
     print("Metadata added to recording")
 
-## Additionally, create a json file with the same name as the file
-# Define the new file name with a JSON extension
-new_file_name = path_to_file_storage + "/" + file_to_store + "__order_" + order_number + ".json"
+# ## Additionally, create a json file with the same name as the file
+# # Define the new file name with a JSON extension
+# new_file_name = path_to_file_storage + "/" + file_to_store + "__order_" + order_number + ".json"
 
-# Define the subfolder name
-subfolder = "audio/json_scripts"
+# # Define the subfolder name
+# subfolder = "audio/json_scripts"
 
-# Create subfolder
-if not os.path.exists(subfolder):
-    os.makedirs(subfolder)
+# # Create subfolder
+# if not os.path.exists(subfolder):
+#     os.makedirs(subfolder)
 
-# Create the new JSON file in the subfolder
-new_file_path = os.path.join(subfolder, os.path.basename(new_file_name))
+# # Create the new JSON file in the subfolder
+# new_file_path = os.path.join(subfolder, os.path.basename(new_file_name))
 
-# Save metadata
-with open(new_file_path, 'w') as file:
-    json.dump(metadata, file, indent=4)
+# # Save metadata
+# with open(new_file_path, 'w') as file:
+#     json.dump(metadata, file, indent=4)

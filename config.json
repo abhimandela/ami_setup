@@ -29,64 +29,92 @@
       "snapshot_interval": 60
    },
    "microphone": {
-      "Directory saved": "/media/bird-pi/PiImages/BIRD/raw_audio/",
-      "Microphone brand name": "plughw:dodoMic,0",
-      "Number of channels": "1",
-      "Sampling frequency": "24000",
-      "Data format": "S32_LE",
-      "Recording type": "mono",
-      "File extension": "wav",
-      "Recording duration": "60"
+      "directory saved": "/media/bird-pi/PiImages/BIRD/raw_audio/",
+      "microphone brand name": "plughw:dodoMic,0",
+      "number of channels": "1",
+      "sampling frequency": "24000",
+      "data format": "S32_LE",
+      "recording type": "mono",
+      "file extension": "wav",
+      "recording duration": "60"
    },
 
-   "IDs": {
-      "location ID": "loc000001",
-      "System ID": "sys000001",
-      "Hardware ID": "har000001",
-      "parentEventID": "sys000001__%Y_%m_%d__19_37_48__06_37_48",
-      "eventID": "sys000001__%Y_%m_%d__%H_%M_%S__%q"
-   },
-
-   "Field observations": {
-      "LocationRemarks": null,
+   "field observations": {
+      "locationRemarks": null,
       "habitat": null
    },
 
-   "Spatial properties": {
+   "spatial properties": {
       "countryCode": "GBR",
       "geodeticDatum": null,
-      "coordinateUncertaintyInMeters": null
-   },
-
-   "Date fields": {
-      "year": "%Y",
-      "month": "%m",
-      "day": "%d",
-      "Daylight saving time": null,
-      "Recording period start time": "T19:37:48-0000",
-      "Recording period end time": "T06:37:48-0000",
+      "coordinateUncertaintyInMeters": null,
       "minimumElevationInMeters": null
    },
 
-   "File storage":{
-      "File size (KB)": null,
-      "file path": "%f",
-      "Pixel size x dimension": null,
-      "Pixel size y dimension": null
+   "ami components":{
+      "single board computer type": "Raspberry Pi 4B",
+      "light attractant make": "LepiLED",
+      "light around camera type": "LED",
+      "use of witty pi": "YES",
+      "watchdog version": null,
+      "camera type": "Logitec Brio",
+      "microphone type": "None"
+      },
+      
+     "additional metadata fields": {
+      "software": null
+     },
+
+     "base ids":{
+      "location id": "loc000001",
+      "system id": "sys000001",
+      "hardware id": "har000001",
+     },
+
+   "motion event data":{
+
+      "event IDs": {
+         "parentEventID": "sys000001__%Y_%m_%d__19_37_48__06_37_48",
+         "eventID": "sys000001__%Y_%m_%d__%H_%M_%S__motion__%q"
+      },
+
+      "date fields": {
+         "eventDate": "%Y-%m-%dT%H:%M:%S-0000",
+         "daylight saving time": null,
+         "recording period start time": "19:37:48-0000",
+         "recording period end time": "06:37:48-0000"
+      },
+
+      "file characteristics":{
+         "file size (KB)": null,
+         "file path": "%f",
+         "pixel size x dimension": null,
+         "pixel size y dimension": null,
+         "file_type": "%n"
+      }
    },
 
-   "AMI components":{
-   "Single Board Computer type": "Raspberry Pi 4B",
-   "Light attractant make": "LepiLED",
-   "Light around camera type": "LED",
-   "Use of witty Pi": "YES",
-   "Watchdog version": null,
-   "Camera type": "Logitec Brio",
-   "Microphone type": "None",
-   "file_type": "%n"
-   },
-   
-  "Additional metadata fields": {
-   "Software": null
-  }
+   "microphone event data":{
+
+      "ids": {
+         "location id": null,
+         "system id": null,
+         "hardware id": null,
+         "parentEventID": null,
+         "eventID": null
+      },
+
+      "date fields": {
+         "eventDate": null,
+         "daylight saving time": null,
+         "recording period start time": null,
+         "recording period end time": null
+      },
+
+      "file characteristics":{
+         "file size (KB)": null,
+         "file path": null,
+         "file_type": null
+      }
+   }
 }

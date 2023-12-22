@@ -36,6 +36,7 @@ def get_camera_id():
         print(f"Error running 'ls' command: {e}, defaulting to /dev/video0")
         return '/dev/video0'
 
+# Update camera and motion configuration and store metadata
 def update_motion_config(script_path, config_data, camera_id):
     with open(script_path, 'r') as script_file:
         script_lines = script_file.readlines()
@@ -79,8 +80,13 @@ def update_motion_config(script_path, config_data, camera_id):
 
                     # Exif text
                     elif field_search == "exif_text":
+
+                        fields_ignore = ["operation", "microphone event data"]
+
+                        metadata =  dict((field, config_data[field]) for field in config_data if field not in fields_ignore)
+
                         # Replace the whole line to remove the semicolon
-                        new_line = line.replace(line, f"exif_text \'{json.dumps(config_data)}\'\n")
+                        new_line = line.replace(line, f"exif_text \'{json.dumps(metadata)}\'\n")
                         print(f"Updated exif metadata configuration") 
                         script_lines[i] = new_line
 
