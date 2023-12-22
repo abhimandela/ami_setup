@@ -81,8 +81,8 @@ def update_motion_config(script_path, config_data, camera_id):
                     # Exif text
                     elif field_search == "exif_text":
 
+                        # Ignore fields that will vary between surveying components
                         fields_ignore = ["operation", "microphone event data"]
-
                         metadata =  dict((field, config_data[field]) for field in config_data if field not in fields_ignore)
 
                         # Replace the whole line to remove the semicolon

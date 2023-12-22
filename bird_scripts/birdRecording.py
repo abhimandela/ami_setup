@@ -191,6 +191,10 @@ metadata = {
 # Update the config dictionary
 json_config["microphone event data"].update(metadata)
 
+# Ignore fields that will vary between surveying components
+fields_ignore = ["operation", "motion event data"]
+json_config = dict((field, json_config[field]) for field in json_config if field not in fields_ignore)
+
 # Save within the audio file
 with taglib.File(path_to_file_storage, save_on_exit=True) as recording:
     #print(recording.tags)
