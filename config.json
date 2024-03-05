@@ -29,88 +29,88 @@
       "snapshot_interval": 60
    },
    "microphone": {
-      "directory saved": "/media/bird-pi/PiImages/BIRD/raw_audio/",
-      "microphone brand name": "plughw:dodoMic,0",
-      "number of channels": "1",
-      "sampling frequency": "24000",
-      "data format": "S32_LE",
-      "recording type": "mono",
-      "file extension": "wav",
-      "recording duration": "60"
+      "directory_saved": "/media/bird-pi/PiImages/BIRD/raw_audio/",
+      "microphone_brand_name": "plughw:dodoMic,0",
+      "number_of_channels": "1",
+      "sampling_frequency": "24000",
+      "data_format": "S32_LE",
+      "recording_type": "mono",
+      "file_extension": "wav",
+      "recording_duration": "60"
    },
 
-   "field observations": {
-      "locationRemarks": null,
+   "field_observations": {
+      "location_remarks": null,
       "habitat": null
    },
 
-   "spatial properties": {
-      "countryCode": "GBR",
-      "geodeticDatum": null,
-      "coordinateUncertaintyInMeters": null,
-      "minimumElevationInMeters": null
+   "spatial_properties": {
+      "country_code": null,
+      "geodetic_datum": null,
+      "coordinate_uncertaintyInMeters": null,
+      "minimum_elevation_in_meters": null
    },
 
-   "ami components":{
-      "single board computer type": "Raspberry Pi 4B",
-      "light attractant make": "LepiLED",
-      "light around camera type": "LED",
-      "use of witty pi": "YES",
-      "watchdog version": null,
-      "camera type": "Logitec Brio",
-      "microphone type": "None"
+   "ami_components":{
+      "single_board_computer_type": null,
+      "light_attractant_make": null,
+      "light_around_camera_type": null,
+      "use_of_witty_pi": null,
+      "watchdog_version": null,
+      "camera_type": null,
+      "microphone_type": null
       },
       
-     "additional metadata fields": {
+     "additional_metadata_fields": {
       "software": null
      },
 
-     "base ids":{
-      "location id": "loc000001",
-      "system id": "sys000001",
-      "hardware id": "har000001"
+     "base_ids":{
+      "location_id": "loc999999",
+      "system_id": "sys999999",
+      "hardware_id": "har999999"
      },
 
-   "motion event data":{
+   "motion_event_data":{
 
-      "event IDs": {
-         "parentEventID": "sys000001__%Y_%m_%d__19_37_48__06_37_48",
-         "eventID": "sys000001__%Y_%m_%d__%H_%M_%S__motion__%q"
+      "event_ids": {
+         "parent_event_id": "sys999999__%Y_%m_%d__19_37_48__06_37_48",
+         "event_id": "sys999999__%Y_%m_%d__motion__%H_%M_%S__%q"
       },
 
-      "date fields": {
-         "eventDate": "%Y-%m-%dT%H:%M:%S-0000",
-         "daylight saving time": null,
-         "recording period start time": "19:37:48-0000",
-         "recording period end time": "06:37:48-0000"
+      "date_fields": {
+         "event_date": "%Y-%m-%dT%H:%M:%S-0000",
+         "daylight_saving_time": null,
+         "recording_period_start_time": "19:37:48-0000",
+         "recording_period_end_time": "06:37:48-0000"
       },
 
-      "file characteristics":{
-         "file size (KB)": null,
-         "file path": "%f",
-         "pixel size x dimension": null,
-         "pixel size y dimension": null,
+      "file_characteristics":{
+         "file_size_kb": null,
+         "file_path": "%f",
+         "pixel_size_x_dimension": null,
+         "pixel_size_y_dimension": null,
          "file_type": "%n"
       }
    },
 
-   "microphone event data":{
+   "microphone_event_data":{
 
-      "event IDs": {
-         "parentEventID": null,
-         "eventID":  null
+      "event_ids": {
+         "parenteventid": null,
+         "eventid":  null
       },
 
-      "date fields": {
-         "eventDate": null,
-         "daylight saving time": null,
-         "recording period start time": null,
-         "recording period end time": null
+      "date_fields": {
+         "event_date": null,
+         "daylight_saving_time": null,
+         "recording_period_start_time": null,
+         "recording_period_end_time": null
       },
 
-      "file characteristics":{
-         "file size (KB)": null,
-         "file path": null,
+      "file_characteristics":{
+         "file_size_kb": null,
+         "file_path": null,
          "file_type": null
       }
    }

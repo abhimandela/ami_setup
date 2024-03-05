@@ -38,14 +38,14 @@ date_and_time = datetime.datetime.now()
 
 # Make directory path name (use directory specified by user as the one where they want the audio files to be stored)
 # Match year_month_day format
-path_to_file_storage = str(json_config["microphone"]["directory saved"] + "%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day)) # e.g. '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8'
+path_to_file_storage = str(json_config["microphone"]["directory_saved"] + "%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day)) # e.g. '/media/bird-pi/PiImages/BIRD/raw_audio/2023_2_8'
 # Create directory with this name
 Path(path_to_file_storage).mkdir(exist_ok=True) # If exists already, then doesn't throw an error
 
 ## Make name for file to store in this directory
 
 # Match LID_x__SID_x__HID_x__year_month_day__hour_minute_second format
-file_to_store = str(json_config["base ids"]['location id'] + "__" + json_config["base ids"]['system id'] + "__" + json_config["base ids"]['hardware id'] + "__%s_%s_%s__%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day, date_and_time.hour, date_and_time.minute, date_and_time.second))
+file_to_store = str(json_config["base_ids"]['location_id'] + "__" + json_config["base_ids"]['system_id'] + "__" + json_config["base_ids"]['hardware_id'] + "__%s_%s_%s__%s_%s_%s" % (date_and_time.year, date_and_time.month, date_and_time.day, date_and_time.hour, date_and_time.minute, date_and_time.second))
 
 # Obtain the number of files already within the directory
 files = os.listdir(path_to_file_storage)
@@ -81,7 +81,7 @@ full_path = path_to_file_storage + "/" + file_to_store + "__order_" + str(order_
 #proc_args = ['arecord', '-D', 'plughw:dodoMic,0', '-c', '1', '-d', '60', '-r', '24000', '-f', 'S32_LE', '-t', 'wav', '-V', 'mono', '-v', full_path]
 
 # Arguments read in from the system_config.JSON file (which can be altered)
-proc_args = ['arecord', '-D', json_config['Microphone brand name'], '-c', json_config['Number of channels'], '-d', json_config["Recording duration"], '-r', json_config['Sampling frequency'], '-f', json_config['Data format'], '-t', json_config["File extension"], '-V', json_config['Recording type'], '-v', full_path]
+proc_args = ['arecord', '-D', json_config['microphone']['microphone_brand_name'], '-c', json_config['microphone']['number_of_channels'], '-d', json_config['microphone']["recording_duration"], '-r', json_config['microphone']['sampling_frequency'], '-f', json_config['microphone']['data_format'], '-t', json_config['microphone']["file_extension"], '-V', json_config['microphone']['recording_type'], '-v', full_path]
 
 ## Recording process - run the arecord function from Python
 rec_proc = subprocess.Popen(proc_args)
@@ -150,9 +150,9 @@ def get_file_size_kb(file_path):
 file_size_kb = get_file_size_kb(full_path)
 
 # obtain IDs
-location_id = json_config["base ids"]["location id"]
-system_id = json_config["base ids"]["system id"]
-hardware_id = json_config["base ids"]["hardware id"]
+location_id = json_config["base_ids"]["location_id"]
+system_id = json_config["base_ids"]["system_id"]
+hardware_id = json_config["base_ids"]["hardwareid"]
 
 # Note recording type
 audio_type = "audible"
@@ -189,7 +189,7 @@ metadata = {
    }
 
 # Update the config dictionary
-json_config["microphone event data"].update(metadata)
+json_config["motion_event_data"].update(metadata)
 
 # Ignore fields that will vary between surveying components
 fields_ignore = ["operation", "motion event data"]
