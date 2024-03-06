@@ -24,7 +24,7 @@ from timezonefinder import TimezoneFinder
 # ===========================================================================================================================
 
 ### Import metadata variables including system configuration ###
-with open("parent_jsons/1_boot_start.json", 'r') as file:
+with open("config.json", 'r') as file:
         json_config = json.load(file)
 
 # ===========================================================================================================================
@@ -169,21 +169,21 @@ eventID = f"{system_id}__{audio_type}__{id_datetime}__{order_number}"
 #Save metadata as dictionary using same heirarchical structure as the config dictionary
 metadata = {
      
-      "event IDs": {
-         "parentEventID": parentEventID,
-         "eventID": eventID
+      "event_ids": {
+         "parent_event_id": parentEventID,
+         "event_id": eventID
       },
 
-    "date fields": {
-        "eventDate": f"{formatted_date}-{hour_difference}00",
-        "daylight saving time": dst,
-        "recording period start time": None,
-        "recording period end time": None
+    "date_fields": {
+        "event_date": f"{formatted_date}-{hour_difference}00",
+        "daylight_saving_time": dst,
+        "recording_period_start_time": None,
+        "recording_period_end_time": None
         },
 
-    "file characteristics":{
-         "file size (KB)": file_size_kb,
-         "file path": full_path,
+    "file_characteristics":{
+         "file_size_kb": file_size_kb,
+         "file_path": full_path,
          "file_type": audio_type
         }
    }
@@ -192,12 +192,12 @@ metadata = {
 json_config["motion_event_data"].update(metadata)
 
 # Ignore fields that will vary between surveying components
-fields_ignore = ["operation", "motion event data"]
+fields_ignore = ["operation", "motion_event_data"]
 json_config = dict((field, json_config[field]) for field in json_config if field not in fields_ignore)
 
 # Save within the audio file
 with taglib.File(path_to_file_storage, save_on_exit=True) as recording:
-    #print(recording.tags)
+
     recording.tags["TITLE"] = json.dumps(metadata)
     print("Metadata added to recording")
 
