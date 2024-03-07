@@ -12,6 +12,18 @@
       "sunrise_operation": ["OFF", "60", "before"],
       "sunset_operation": ["ON", "30", "after"]
    },
+   "audio": {
+      "sample_rate":"48000",
+      "file_type":"wav",
+      "channels": "1",
+      "Device": "",
+      "rec_start": "2023-12-05 19:00:00 GMT",
+      "rec_end": "2024-04-05 07:30:00 GMT",
+      "rec_length": "1",
+      "rec_interval": "5",
+      "rec_type": "mono",
+      "target_path": "/home/abhi/Desktop/audio/"
+   },
    "camera": {
       "brightness": 300,
       "focus_auto": 2,
