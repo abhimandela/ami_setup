@@ -3,7 +3,7 @@ This is the branch to modify AMI configurations to be used with the WittyPi L3V7
 
 WittyPi L3V7 https://www.uugear.com/product/witty-pi-4-l3v7/ can be used a single board solution that provides RTC, Watchdog and UPS functionalities intended for the AMI systems. This add on board to Raspberry Pi also provides capabilities to  schedule ON and OFF times with custom schedules.
 
-AMI configuration files here have been adjusted to be used only with the WittyPi L3V7 and Raspberry Pi 4B with raspbian OS image version x.y.z.q (This contains the necessary software packages needed for Witty Pi L3V7- Jumpt to the last section here if you do not have tehe recommended image). It is not tested and not guaranteed to work with other version of Witty Pi boards.
+AMI configuration files here have been adjusted to be used only with the WittyPi L3V7 and Raspberry Pi 4B with raspbian OS image version raspi_img_wiitypi_v1.0.img (This contains the necessary software packages needed for Witty Pi L3V7- Jumpt to the last section here if you do not have tehe recommended image). It is not tested and not guaranteed to work with other version of Witty Pi boards.
 
 More information about Witty Pi in the user manual here: https://cdn-shop.adafruit.com/product-files/5705/WittyPi4L3V7_UserManual.pdf 
 
