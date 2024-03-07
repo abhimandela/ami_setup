@@ -3,28 +3,30 @@ This is the branch to modify AMI configurations to be used with the WittyPi L3V7
 
 WittyPi L3V7 https://www.uugear.com/product/witty-pi-4-l3v7/ can be used a single board solution that provides RTC, Watchdog and UPS functionalities intended for the AMI systems. This add on board to Raspberry Pi also provides capabilities to  schedule ON and OFF times with custom schedules.
 
-AMI configuration files here have been adjusted to be used only with the WittyPi L3V7 and Raspberry Pi 4B with raspbian OS image version raspi_img_wiitypi_v1.0.img (This contains the necessary software packages needed for Witty Pi L3V7- Jumpt to the last section here if you do not have tehe recommended image). It is not tested and not guaranteed to work with other version of Witty Pi boards.
+AMI configuration files here have been adjusted to be used only with the WittyPi L3V7 and Raspberry Pi 4B with raspbian OS image version raspi_img_wiitypi_v1.0.img (This contains the necessary software packages needed for Witty Pi L3V7 - Jump to the last section here if you do not have the recommended image). It is not tested and not guaranteed to work with other version of Witty Pi boards.
 
 More information about Witty Pi in the user manual here: https://cdn-shop.adafruit.com/product-files/5705/WittyPi4L3V7_UserManual.pdf 
 
 ## Usage  
 Set the configurations by running the set_ami_config.py as below:
 
-* The script has to be run from the directory where config.json and this file are located
-* Other files that are bring modified like the motion.conf and heliocron.toml must be present in respective paths (create templates if not aleady present)
+* The script has to be run from the directory where config.json and the above mentioned file are located
+* Other files that are being modified like the motion.conf and heliocron.toml must be present in respective paths (create templates if not aleady present)
 * From commandline that has Python3 enabled, run the command
 
    ```bash
    sudo python3 set_ami_config.py
 
 * The above command prints a summary of changes done to script, make sure the changes intended are reflected correctly. 
-* The script does not validate for correct input values that can be entered atleast not at this point 
+* The script does not validate for correct input values that can be entered, atleast not at this point 
 
 This code aims to achieve the following:
 1. Ability to configure AMI systems with snapshot interval
 2. Ability to set different camera settings available 
 3. Ability to disable and enable motion detection 
-4. TBD: Ability to set operating times using sunset and sunrise times from a given location 
+4. TODO: Ability to set operating times using sunset and sunrise times from a given location 
+5. TODO: Ability to configure audio settings and recording times 
+6. TODO: Include DATA validation 
 
 The script reads configuration settings from a JSON file and updates various configuration files accordingly.
 
@@ -32,14 +34,14 @@ Instructions to update AMI configurations:
 1. Edit config.json to updated with appropriate values
 2. Run the set_ami_config.py to set all necessary configurations 
 3. Paths should be absolute, and eveything should work as long as the paths and values entered are correct
-4. TODO: Include DATA validation 
 
 The set_ami_config.py script does the following after reading the config.json file:
 1. Update location in ~/.config/helicocron.toml
 2. Update Camera ID by using the command "ls -dev/v4l/by-id/" in the following files and camera1.conf
-3. Default videodevice to be used for capturing is "/dev/video0"
+3. Default videodevice to be used for capturing is "/dev/video0" if no Camera ID is found
 4. Update camera setttings in /home/pi/scripts/setCamera.sh 
 5. Update motion configuration in /etc/motion/motion.conf
+6. TODO: Update audio capture script for audio settings
 
 Configuration Files
 
