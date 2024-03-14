@@ -1,30 +1,38 @@
 {
-   "location": {
+   "device_settings": {
       "lat": 52.752845,
-      "lon": -3.253449
-   },
-   "operation": {
+      "lon": -3.253449,
+      "timeZone": "GMT",
+      "modes": "AV",
       "start_date": "2023-12-05",
-      "end_date": "2024-12-04",
-      "start_time": "19:37:48 GMT",
-      "end_time": "06:37:48 GMT",
+      "end_date": "2024-15-04"
+   },
+   "camera_operation": {
+      "start_time": "16:30:00",
+      "end_time": "04:30:00",
       "days_of_week": ["Mon", "Wed", "Fri"],
       "sunrise_operation": ["OFF", "60", "before"],
       "sunset_operation": ["ON", "30", "after"]
    },
-   "audio": {
+   "audio_operation": {
+      "numer_of_schedules": "2",
+      "start_time_0": "05:00:00",
+      "end_time_0": "07:30:00",
+      "start_time_1": "16:30:00",
+      "end_time_1": "19:30:00",
+      "days_of_week": ["Tue", "Thu", "Sat"],
+      "Device": "",
+      "target_path": "/home/abhi/Desktop/audio/"
+   },
+   "audio_settings": {
       "sample_rate":"48000",
       "file_type":"wav",
       "channels": "1",
-      "Device": "",
-      "rec_start": "2023-12-05 19:00:00 GMT",
-      "rec_end": "2024-04-05 07:30:00 GMT",
       "rec_length": "1",
       "rec_interval": "5",
-      "rec_type": "mono",
-      "target_path": "/home/abhi/Desktop/audio/"
+      "rec_type": "mono"
    },
-   "camera": {
+   "camera_settings": {
       "brightness": 300,
       "focus_auto": 2,
       "focus_absolute": 200,
@@ -36,7 +44,7 @@
       "sharpness": 35,
       "contrast": 20
    },
-   "motion": {
+   "motion_settings": {
       "pause": "off",
       "snapshot_interval": 60
    }
