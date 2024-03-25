@@ -22,5 +22,5 @@ fi
 command="arecord -t $file_type -r $sample_rate -d $rec_length -c $channels -f S16_LE --device=$device $target_path/${datetime}.${file_type}"
 
 # Execute the command
-echo "Executing command: $command $date"
-#eval $command
+echo "Executing command: $command"
+eval $command
