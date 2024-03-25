@@ -20,17 +20,17 @@
       "end_time_0": "07:30:00",
       "start_time_1": "16:30:00",
       "end_time_1": "19:30:00",
-      "days_of_week": ["Tue", "Thu", "Sat"],
-      "Device": "",
-      "target_path": "/home/abhi/Desktop/audio/"
+      "days_of_week": ["Tue", "Thu", "Sat"]
    },
    "audio_settings": {
       "sample_rate":"48000",
       "file_type":"wav",
       "channels": "1",
-      "rec_length": "1",
-      "rec_interval": "5",
-      "rec_type": "mono"
+      "rec_length": "60",
+      "rec_interval": "600",
+      "rec_type": "mono",
+      "device": "hw",
+      "target_path": "/home/abhi/Desktop/audio"
    },
    "camera_settings": {
       "brightness": 300,
