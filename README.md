@@ -34,6 +34,7 @@ Instructions to update AMI configurations:
 1. Edit config.json to updated with appropriate values
 2. Run the set_ami_config.py to set all necessary configurations 
 3. Paths should be absolute, and eveything should work as long as the paths and values entered are correct
+4. The audio parameters set in the config.json file is independent of the set_ami_config.py script 
 
 The set_ami_config.py script does the following after reading the config.json file:
 1. Update location in ~/.config/helicocron.toml
@@ -41,7 +42,7 @@ The set_ami_config.py script does the following after reading the config.json fi
 3. Default videodevice to be used for capturing is "/dev/video0" if no Camera ID is found
 4. Update camera setttings in /home/pi/scripts/setCamera.sh 
 5. Update motion configuration in /etc/motion/motion.conf
-6. TODO: Update audio capture script for audio settings
+6. Audio paramters are used by the ami_setup/audio_record.sh script and is independent of the set_ami_config.py 
 
 Configuration Files
 
