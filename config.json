@@ -5,29 +5,43 @@
       "timeZone": "GMT",
       "modes": "AV",
       "start_date": "2023-12-05",
-      "end_date": "2024-15-04"
+      "end_date": "2024-15-04",
+      "telemetry_enabled": "Yes",
+      "telemetry_interval_mins": ""
    },
    "camera_operation": {
-      "start_time": "16:30:00",
-      "end_time": "04:30:00",
+      "start_time": "18:00:00",
+      "end_time": "04:00:00",
       "days_of_week": ["Mon", "Wed", "Fri"],
       "sunrise_operation": ["OFF", "60", "before"],
       "sunset_operation": ["ON", "30", "after"]
    },
+   "ultrasonic_operation": {
+      "start_times": ["18:00:00", "16:30:00"],
+      "end_times": ["18:00:00","19:30:00"],
+      "days_of_week": ["Tue","Thu","Sat"]
+   },
+   "ultrasonic_settings": {
+      "sample_rate":"384000",
+      "file_type":"wav",
+      "channels": "1",
+      "rec_length": "10",
+      "rec_interval": "60",
+      "rec_type": "mono",
+      "device": "hw:CARD=Microphone,DEV=0",
+      "target_path": "/home/abhi/Desktop/ultrasonic"
+   },
    "audio_operation": {
-      "numer_of_schedules": "2",
-      "start_time_0": "05:00:00",
-      "end_time_0": "07:30:00",
-      "start_time_1": "16:30:00",
-      "end_time_1": "19:30:00",
-      "days_of_week": ["Tue", "Thu", "Sat"]
+      "start_times": ["04:00:00", "17:00:00"],
+      "end_times": ["07:00:00","20:00:00"],
+      "days_of_week": ["Mon","Wed","Fri"]
    },
    "audio_settings": {
       "sample_rate":"48000",
       "file_type":"wav",
       "channels": "1",
-      "rec_length": "60",
-      "rec_interval": "600",
+      "rec_length": "10",
+      "rec_interval": "60",
       "rec_type": "mono",
       "device": "hw:CARD=Microphone,DEV=0",
       "target_path": "/home/abhi/Desktop/audio"
