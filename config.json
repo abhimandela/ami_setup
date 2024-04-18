@@ -75,7 +75,7 @@
 
       "event_ids": {
          "parent_event_id": "sys999999__%Y_%m_%d__19_37_48__06_37_48",
-         "event_id": "sys999999__%Y_%m_%d__motion__%H_%M_%S__%q"
+         "event_id": "sys999999__%Y_%m_%d__%H_%M_%S"
       },
 
       "date_fields": {
@@ -87,10 +87,8 @@
 
       "file_characteristics":{
          "file_size_kb": null,
-         "file_path": "%f",
          "pixel_size_x_dimension": null,
-         "pixel_size_y_dimension": null,
-         "file_type": "%n"
+         "pixel_size_y_dimension": null
       }
    },
 
@@ -111,7 +109,7 @@
       "file_characteristics":{
          "file_size_kb": null,
          "file_path": null,
-         "file_type": null
+         "recording_type": null
       }
    }
 }
