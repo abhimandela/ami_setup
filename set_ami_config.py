@@ -18,8 +18,8 @@ def update_toml_config(toml_path, location_data):
     print (" ***************** Updating Location information ***************** ")
     #print ("Lat: ",location_data['location']['lat'])
     #print ("Lon: ",location_data['location']['lon'])
-    config['latitude'] = location_data['location']['lat']
-    config['longitude'] = location_data['location']['lon']
+    config['latitude'] = location_data['device_settings']['lat']
+    config['longitude'] = location_data['device_settings']['lon']
 
     # Write the updated TOML configuration back to the file
     with open(toml_path, 'w') as toml_file:
@@ -33,7 +33,8 @@ def get_camera_id():
         print ("camera ID is: ",camera_id)
         return camera_id
     except subprocess.CalledProcessError as e:
-        print(f"Error running 'ls' command: {e}, defaulting to /dev/video0")
+        print(f"does this work")
+        print(f"Error running ls command: {e}, defaulting to /dev/video0")
         return '/dev/video0'
 
 # Update camera and motion configuration and store metadata
@@ -44,7 +45,7 @@ def update_motion_config(script_path, config_data, camera_id):
     print (" ***************** Updating motion settings ***************** ")
 
     #List every motion configuration parameter and addionally specify the camera ID (videodevice) and exif_text (field for metadata storage)
-    fields = list(config_data['motion'].keys()) + ['videodevice', "exif_text"]
+    fields = list(config_data['motion_settings'].keys()) + ['videodevice', "exif_text"]
 
     # For each line in the motion.config file
     for i, line in enumerate(script_lines):
@@ -95,7 +96,7 @@ def update_motion_config(script_path, config_data, camera_id):
                         print(f"Original line: {line.strip()}")
                         _, existing_value = line.split(field_search, 1)
                         # Replace the existing field value with the new field value
-                        new_line = line.replace(existing_value, f" {config_data['motion'][field_search]}\n")
+                        new_line = line.replace(existing_value, f" {config_data['motion_settings'][field_search]}\n")
                         print(f"Updated line: {new_line.strip()}")
                         script_lines[i] = new_line
 
@@ -154,7 +155,7 @@ def update_camera_settings(script_path, camera_data, camera_id):
     print (" ***************** Updating camera settings ***************** ")
 
     # Update camera settings
-    for key, value in camera_data['camera'].items():
+    for key, value in camera_data['camera_settings'].items():
         for i, line in enumerate(script_lines):
             
             # Ignore lines starting with #
@@ -187,7 +188,7 @@ if __name__ == "__main__":
 
     #Initialize camera ID if camera ID lookup fails 
     camera_id = '/dev/video0'
-    camera_id = get_camera_id()
+    #camera_id = get_camera_id()
 
     print ("Camera ID after initialization", camera_id)
 
