@@ -62,16 +62,6 @@
       "pause": "off",
       "snapshot_interval": 60
    },
-   "microphone": {
-      "directory_saved": "/media/bird-pi/PiImages/BIRD/raw_audio/",
-      "microphone_brand_name": "plughw:dodoMic,0",
-      "number_of_channels": "1",
-      "sampling_frequency": "24000",
-      "data_format": "S32_LE",
-      "recording_type": "mono",
-      "file_extension": "wav",
-      "recording_duration": "60"
-   },
 
    "field_observations": {
       "location_remarks": null,
@@ -79,7 +69,7 @@
    },
 
    "spatial_properties": {
-      "country_code": null,
+      "country_code": "GBR",
       "geodetic_datum": null,
       "coordinate_uncertaintyInMeters": null,
       "minimum_elevation_in_meters": null
@@ -108,21 +98,13 @@
    "motion_event_data":{
 
       "event_ids": {
-         "parent_event_id": "sys999999__%Y_%m_%d__19_37_48__06_37_48",
-         "event_id": "sys999999__%Y_%m_%d__%H_%M_%S"
+         "parent_event_id": "sys999999__camera__%Y_%m_%d__18_00_00__04_00_00",
+         "event_id": "sys999999__camera__%Y_%m_%d__%H_%M_%S"
       },
 
       "date_fields": {
          "event_date": "%Y-%m-%dT%H:%M:%S-0000",
-         "daylight_saving_time": null,
-         "recording_period_start_time": "19:37:48-0000",
-         "recording_period_end_time": "06:37:48-0000"
-      },
-
-      "file_characteristics":{
-         "file_size_kb": null,
-         "pixel_size_x_dimension": null,
-         "pixel_size_y_dimension": null
+         "daylight_saving_time": null
       }
    }
 }
