@@ -124,26 +124,5 @@
          "pixel_size_x_dimension": null,
          "pixel_size_y_dimension": null
       }
-   },
-
-   "microphone_event_data":{
-
-      "event_ids": {
-         "parenteventid": null,
-         "eventid":  null
-      },
-
-      "date_fields": {
-         "event_date": null,
-         "daylight_saving_time": null,
-         "recording_period_start_time": null,
-         "recording_period_end_time": null
-      },
-
-      "file_characteristics":{
-         "file_size_kb": null,
-         "file_path": null,
-         "recording_type": null
-      }
    }
 }
