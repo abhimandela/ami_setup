@@ -33,7 +33,6 @@ def get_camera_id():
         print ("camera ID is: ",camera_id)
         return camera_id
     except subprocess.CalledProcessError as e:
-        print(f"does this work")
         print(f"Error running ls command: {e}, defaulting to /dev/video0")
         return '/dev/video0'
 
