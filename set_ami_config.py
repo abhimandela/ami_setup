@@ -188,7 +188,7 @@ if __name__ == "__main__":
 
     #Initialize camera ID if camera ID lookup fails 
     camera_id = '/dev/video0'
-    #camera_id = get_camera_id()
+    camera_id = get_camera_id()
 
     print ("Camera ID after initialization", camera_id)
 
