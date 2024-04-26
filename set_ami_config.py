@@ -18,8 +18,8 @@ def update_toml_config(toml_path, location_data):
     print (" ***************** Updating Location information ***************** ")
     #print ("Lat: ",location_data['location']['lat'])
     #print ("Lon: ",location_data['location']['lon'])
-    config['latitude'] = location_data['location']['lat']
-    config['longitude'] = location_data['location']['lon']
+    config['latitude'] = location_data['device_settings']['lat']
+    config['longitude'] = location_data['device_settings']['lon']
 
     # Write the updated TOML configuration back to the file
     with open(toml_path, 'w') as toml_file:
@@ -33,51 +33,74 @@ def get_camera_id():
         print ("camera ID is: ",camera_id)
         return camera_id
     except subprocess.CalledProcessError as e:
-        print(f"Error running 'ls' command: {e}, defaulting to /dev/video0")
+        print(f"Error running ls command: {e}, defaulting to /dev/video0")
         return '/dev/video0'
 
-# Configure 'motion' software related paramters 
-def update_motion_config(script_path, motion_data, camera_id):
+# Update camera and motion configuration and store metadata
+def update_motion_config(script_path, config_data, camera_id):
     with open(script_path, 'r') as script_file:
         script_lines = script_file.readlines()
 
     print (" ***************** Updating motion settings ***************** ")
 
-    #print (motion_data['motion'].items())
+    #List every motion configuration parameter and addionally specify the camera ID (videodevice) and exif_text (field for metadata storage)
+    fields = list(config_data['motion_settings'].keys()) + ['videodevice', "exif_text"]
 
-    # Update motion settings
-    for key, value in motion_data['motion'].items():
-        for i, line in enumerate(script_lines):
-            
-            # Ignore lines starting with #
-            if line.strip().startswith('#'):
-                continue
+    # For each line in the motion.config file
+    for i, line in enumerate(script_lines):
 
-            # Case to update videodevice ID which is not set in the config.json file
-            if 'videodevice' in line:
-                print(f"Original videodevice line: {line.strip()}")
-                
-                # Extract the part after "videodevice"
-                _, existing_camera_id = line.split('videodevice')
-                
-                # Replace the existing camera ID with the new camera ID
-                new_line = line.replace(existing_camera_id, f' {camera_id}')
-                
-                print(f"Updated videodevice line: {new_line.strip()}") 
-                break 
+        # Ignore lines starting with #
+        if line.strip().startswith('#'):
+            continue
 
-            # Using a regular expression to find lines containing the setting key and value
-            pattern = fr'({key} )(\S+)'
-            #print ("pattern: ",pattern)
+        # For each field...
+        for field_search in fields:
+
+            # Search for the occurence of the field name, followed by one or more whitespaces
+            pattern = fr'({field_search} )(\S+)'
             match = re.search(pattern, line)
+
             if match:
-                original_value = match.group(2)
-                print(f"Original line: {line.strip()}")
-                # Replace the setting value while preserving the rest of the line
-                new_line = line.replace(f"{key} {original_value}", f"{key} {value}")
-                print(f"Updated line: {new_line.strip()}")
-                script_lines[i] = new_line
-                break
+
+                # Obtain the field name
+                field,_ = line.split(' ', 1)
+
+                # This if condition stops the capture of field name mentions within the exif_text string
+                # The exif_text field also includes a semicolon before the field name
+                if field == field_search or field == f";{field_search}":
+
+                    # Camera ID
+                    if field_search == "videodevice":
+                        # Extract the part after "videodevice"
+                        _, existing_camera_id = line.split('videodevice', 1)
+                        # Replace the existing camera ID with the new camera ID
+                        new_line = line.replace(existing_camera_id, f' {camera_id}\n')
+                        print(f"Updated videodevice line: {new_line.strip()}")
+                        script_lines[i] = new_line
+
+                    # Exif text
+                    elif field_search == "exif_text":
+
+                        # Ignore fields that will vary between surveying components
+                        fields_ignore = ["ultrasonic_operation", "ultrasonic_settings", "audio_operation", "audio_settings"]
+                        metadata =  dict((field, config_data[field]) for field in config_data if field not in fields_ignore)
+
+                        # Replace the whole line to remove the semicolon
+                        new_line = line.replace(line, f"exif_text \'{json.dumps(metadata)}\'\n")
+                        print(f"Updated exif metadata configuration") 
+                        script_lines[i] = new_line
+
+                    # Remaining fields in the motion configuration settings
+                    else:
+                        print(f"Original line: {line.strip()}")
+                        _, existing_value = line.split(field_search, 1)
+                        # Replace the existing field value with the new field value
+                        new_line = line.replace(existing_value, f" {config_data['motion_settings'][field_search]}\n")
+                        print(f"Updated line: {new_line.strip()}")
+                        script_lines[i] = new_line
+
+                else:
+                    continue
 
     # Write the updated script content back to the file
     with open(script_path, 'w') as script_file:
@@ -131,7 +154,7 @@ def update_camera_settings(script_path, camera_data, camera_id):
     print (" ***************** Updating camera settings ***************** ")
 
     # Update camera settings
-    for key, value in camera_data['camera'].items():
+    for key, value in camera_data['camera_settings'].items():
         for i, line in enumerate(script_lines):
             
             # Ignore lines starting with #
